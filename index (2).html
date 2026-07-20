@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Global Communication — Pack Unique</title>
+<meta name="description" content="Global Communication — Pack unique 20 000 F CFA. 10 tâches vidéo quotidiennes, 2 500 F CFA par tâche, retraits instantanés. Contact Service Client WhatsApp." />
+
+<!--
+  Global Communication Landing Page
+  - Single-file (HTML + CSS + JS)
+  - Futuriste, glassmorphism, neon aurora background
+  - Animations optimisées (transform/opacity)
+  - Links: WhatsApp service client
+-->
+
+<style>
+  /* ========== Variables & Palette ========== */
+  :root{
+    --bg-deep: #03061a; /* Bleu-noir très profond */
+    --accent-violet: #8a00ff; /* Violet électrique néon */
+    --accent-violet-2: #b34bff;
+    --accent-red: #ff005c; /* Rouge dynamique néon */
+    --glass: rgba(255,255,255,0.06);
+    --glass-2: rgba(255,255,255,0.04);
+    --text: #f4f7ff;
+    --muted: rgba(255,255,255,0.55);
+    --card-radius: 16px;
+    --max-width: 1100px;
+    --shadow-neon: 0 8px 40px rgba(138,0,255,0.12);
+    --time-slow: 6s;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+
+  /* ========== Global layout ========== */
+  html,body{
+    height:100%;
+    margin:0;
+    background:var(--bg-deep);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+  }
+  .wrap{
+    max-width:var(--max-width);
+    margin:0 auto;
+    padding:28px;
+  }
+
+  /* ========== Aurora animated background (subtle, GPU) ========== */
+  .aurora{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    pointer-events:none;
+    background:
+      radial-gradient(800px 400px at 10% 20%, rgba(138,0,255,0.12), transparent 10%),
+      radial-gradient(600px 300px at 80% 80%, rgba(255,0,92,0.08), transparent 12%),
+      linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.15));
+    mix-blend-mode:screen;
+    filter:blur(40px) saturate(120%);
+    transform:translateZ(0);
+  }
+  /* moving layers */
+  .aurora::before, .aurora::after{
+    content:"";
+    position:absolute; inset:0;
+    background: radial-gradient(600px 300px at 30% 10%, rgba(138,0,255,0.08), transparent 20%),
+                radial-gradient(500px 250px at 70% 90%, rgba(255,0,92,0.06), transparent 18%);
+    filter:blur(80px) contrast(1.1);
+    mix-blend-mode:screen;
+    animation: drift var(--time-slow) linear infinite;
+    will-change:transform;
+  }
+  .aurora::after{ animation-direction:reverse; animation-duration:calc(var(--time-slow) * 1.4); opacity:0.9; }
+
+  @keyframes drift{
+    0%{ transform:translate3d(-6%, -2%,0) rotate(0deg); }
+    50%{ transform:translate3d(6%, 2%,0) rotate(1deg); }
+    100%{ transform:translate3d(-6%, -2%,0) rotate(0deg); }
+  }
+
+  /* ========== Header / Hero ========== */
+  header.hero{
+    padding:40px 18px;
+    display:flex;
+    align-items:center;
+    gap:24px;
+    justify-content:space-between;
+    flex-wrap:wrap;
+  }
+  .brand{
+    display:flex;align-items:center;gap:14px;
+  }
+  .logo{
+    width:64px;height:64px;border-radius:12px;
+    background:linear-gradient(135deg, rgba(138,0,255,0.16), rgba(255,0,92,0.12));
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:var(--shadow-neon);
+    border:1px solid rgba(255,255,255,0.04);
+    backdrop-filter: blur(6px) saturate(150%);
+  }
+  .logo svg{ width:38px; height:38px; filter:drop-shadow(0 4px 14px rgba(138,0,255,0.18)); }
+
+  /* Glitch title (multiple layers) */
+  .brand h1{
+    font-weight:700;
+    font-size: clamp(18px, 2.2vw, 28px);
+    margin:0;
+    letter-spacing:0.6px;
+    position:relative;
+    line-height:1;
+  }
+  .glitch{
+    position:relative;
+    display:inline-block;
+    color:var(--text);
+  }
+  .glitch::before, .glitch::after{
+    content:attr(data-text);
+    position:absolute; left:0; top:0;
+    width:100%; height:100%;
+    overflow:hidden;
+    clip-path: inset(0 0 0 0);
+    opacity:0.9;
+    pointer-events:none;
+  }
+  .glitch::before{
+    color:var(--accent-violet);
+    transform:translate3d(-2px, -1px, 0);
+    mix-blend-mode:screen;
+    animation: glitch-anim-1 3.2s infinite linear;
+    filter: blur(0.8px);
+  }
+  .glitch::after{
+    color:var(--accent-red);
+    transform:translate3d(2px, 1px, 0);
+    animation: glitch-anim-2 4.1s infinite linear;
+    filter: blur(0.6px);
+  }
+  @keyframes glitch-anim-1 {
+    0%{ clip-path: inset(0 0 80% 0); transform:translate3d(-2px,-1px,0) skewX(-0.5deg);}
+    5%{ clip-path: inset(10% 0 60% 0); transform:translate3d(-6px,2px,0) skewX(1deg);}
+    10%{ clip-path: inset(85% 0 0 0); transform:translate3d(-1px,-1px,0) skewX(0.2deg);}
+    100%{ clip-path: inset(0 0 80% 0); transform:translate3d(-2px,-1px,0);}
+  }
+  @keyframes glitch-anim-2 {
+    0%{ clip-path: inset(80% 0 0 0); transform:translate3d(2px,1px,0) skewX(0.2deg);}
+    8%{ clip-path: inset(25% 0 50% 0); transform:translate3d(4px,-2px,0) skewX(-1deg);}
+    18%{ clip-path: inset(0 0 80% 0); transform:translate3d(2px,1px,0) skewX(0.2deg);}
+    100%{ clip-path: inset(80% 0 0 0); transform:translate3d(2px,1px,0);}
+  }
+
+  /* Hero content area */
+  .hero-body{
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap:28px;
+    align-items:center;
+    width:100%;
+  }
+  @media (max-width:900px){
+    .hero-body{ grid-template-columns:1fr; }
+    header.hero{ padding:18px; }
+  }
+
+  .hero-copy{
+    padding:28px;
+  }
+  .scramble{
+    font-size: clamp(20px, 4vw, 34px);
+    font-weight:700;
+    line-height:1.05;
+    margin:0 0 18px 0;
+    color:var(--text);
+    letter-spacing:0.2px;
+  }
+  .lead{
+    color:var(--muted);
+    font-size:clamp(14px,1.6vw,16px);
+    margin-bottom:20px;
+    max-width:56ch;
+  }
+
+  /* CTA neon button */
+  .cta{
+    display:inline-block;
+    position:relative;
+    border-radius:999px;
+    padding:14px 22px;
+    color:white;
+    font-weight:700;
+    text-decoration:none;
+    background:linear-gradient(90deg, rgba(138,0,255,0.12), rgba(255,0,92,0.06));
+    border:1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 10px 30px rgba(138,0,255,0.08);
+    overflow:visible;
+    will-change:transform;
+    transform:translateZ(0);
+  }
+  /* rotating neon border using pseudo element */
+  .cta::before{
+    content:"";
+    position:absolute; inset:-4px;
+    border-radius:999px;
+    padding:4px;
+    background:
+      conic-gradient(from 0deg, rgba(138,0,255,0.85), rgba(179,75,255,0.85), rgba(255,0,92,0.85), rgba(138,0,255,0.85));
+    -webkit-mask: linear-gradient(#000,#000) content-box, linear-gradient(#000,#000);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    filter:blur(8px) saturate(140%);
+    opacity:0.9;
+    animation: rotate-border 3.5s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes rotate-border { to{ transform: rotate(360deg); } }
+
+  /* click pulse (haptic visual) */
+  .cta:active{ transform:scale(0.98); }
+  .pulse{
+    position:absolute; inset:0; border-radius:999px; pointer-events:none; z-index:0;
+  }
+  .pulse.anim{
+    animation: cta-pulse 550ms ease-out;
+  }
+  @keyframes cta-pulse {
+    0%{ box-shadow: 0 0 0 0 rgba(138,0,255,0.24); transform:scale(1); opacity:0.9; }
+    70%{ box-shadow: 0 0 0 18px rgba(138,0,255,0.04); transform:scale(1.03); opacity:0; }
+    100%{ box-shadow:none; opacity:0; transform:scale(1); }
+  }
+
+  /* ========== Pack Card (Glassmorphism + Tilt) ========== */
+  .pack-wrap{
+    display:flex; align-items:center; justify-content:center;
+    perspective:1200px;
+  }
+  .pack{
+    width:420px; max-width:92%;
+    border-radius:var(--card-radius);
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.06);
+    padding:18px;
+    box-shadow: 0 20px 50px rgba(2,6,23,0.6), var(--shadow-neon);
+    transform-style:preserve-3d;
+    transition:transform 450ms cubic-bezier(.15,.8,.3,1), box-shadow 350ms;
+    will-change:transform;
+    position:relative;
+    overflow:hidden;
+    backdrop-filter: blur(8px) saturate(160%);
+  }
+  .pack .shine{
+    position:absolute; inset:0; pointer-events:none;
+    background: linear-gradient(120deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01) 30%, transparent 60%);
+    mix-blend-mode:overlay;
+    transform:translateZ(1px);
+  }
+  .pack .orb{
+    position:absolute; width:180px;height:180px;border-radius:50%;
+    right:-50px; top:-50px;
+    background: radial-gradient(circle at 30% 30%, rgba(138,0,255,0.14), transparent 35%), radial-gradient(circle at 70% 70%, rgba(255,0,92,0.12), transparent 40%);
+    filter:blur(28px);
+    transform:translateZ(1px);
+  }
+  .pack h2{ margin:0; font-size:20px; font-weight:700; }
+  .pack .price{
+    display:flex; align-items:baseline; gap:8px; margin-top:12px;
+  }
+  .price .now{ font-size:28px; font-weight:800; color:var(--accent-violet-2); letter-spacing:0.6px; }
+  .price .sub{ color:var(--muted); font-size:13px; }
+
+  .pack .benefits{ margin-top:14px; color:var(--muted); font-size:14px; line-height:1.45; }
+
+  .cta-small{
+    display:inline-block;margin-top:16px;padding:10px 14px;border-radius:12px;
+    color:white;background:linear-gradient(90deg,var(--accent-violet),var(--accent-red));
+    text-decoration:none;font-weight:700;border:0;
+    box-shadow: 0 8px 30px rgba(138,0,255,0.12);
+  }
+
+  /* counter style */
+  .counter{
+    font-size:28px;font-weight:900;color:var(--accent-violet);
+    letter-spacing:0.6px;
+  }
+
+  /* ========== Timeline ========== */
+  .timeline{
+    display:flex; gap:28px; align-items:flex-start;
+    margin:48px 0;
+    padding:20px;
+  }
+  .timeline .bar{
+    width:64px; min-width:64px; position:relative; display:flex; justify-content:center;
+  }
+  .timeline .line{
+    position:relative; width:6px; height:100%; background:linear-gradient(180deg, rgba(138,0,255,0.9), rgba(255,0,92,0.7));
+    border-radius:6px; transform-origin:top; transform:scaleY(0);
+    transition:transform 700ms cubic-bezier(.2,.9,.25,1);
+    box-shadow:0 6px 30px rgba(138,0,255,0.12);
+  }
+  .timeline .events{
+    flex:1;
+    display:flex; flex-direction:column; gap:28px;
+  }
+  .step{
+    display:flex; gap:18px; align-items:flex-start;
+  }
+  .step .dot{
+    width:18px;height:18px;border-radius:50%; background:linear-gradient(90deg,var(--accent-violet),var(--accent-red));
+    box-shadow:0 6px 18px rgba(138,0,255,0.16);
+    flex-shrink:0;
+    transform:scale(0.9);
+    transition:transform 220ms, box-shadow 220ms;
+  }
+  .step.active .dot{ transform:scale(1.12); box-shadow:0 10px 28px rgba(138,0,255,0.22); }
+  .step h3{ margin:0;font-size:16px; }
+  .step p{ margin:6px 0 0 0;color:var(--muted); font-size:14px; }
+
+  /* ========== Testimonials 3D Carousel ========== */
+  .testimonials{
+    perspective:1400px;
+    height:320px;
+    position:relative;
+    margin:40px 0;
+    overflow:visible;
+  }
+  .carousel{
+    position:absolute; inset:0; transform-style:preserve-3d; transition:transform 1s linear;
+    display:block;
+    will-change:transform;
+  }
+  .card{
+    position:absolute; left:50%; top:50%; transform-origin:center center;
+    width:260px; height:160px; margin:-80px 0 0 -130px;
+    border-radius:14px; padding:18px; box-sizing:border-box;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.04);
+    backdrop-filter: blur(6px);
+    display:flex; flex-direction:column; gap:8px; justify-content:center;
+    text-align:left; transition:transform 300ms, filter 300ms, opacity 300ms;
+  }
+  .card p{ margin:0; color:var(--muted); font-size:14px; line-height:1.4; }
+  .card .who{ font-weight:700; color:var(--text); font-size:14px; }
+
+  /* focused card style */
+  .card.focus{ transform:translateZ(120px) scale(1.03); box-shadow:0 30px 70px rgba(2,6,23,0.6); filter:blur(0px) saturate(120%); opacity:1; }
+  .card.behind{ filter:blur(6px) brightness(0.9); opacity:0.6; transform:translateZ(-40px); }
+
+  /* ========== Floating WhatsApp CTA ========== */
+  .fab{
+    position:fixed; right:20px; bottom:20px; z-index:100;
+    width:64px; height:64px; border-radius:18px;
+    display:flex;align-items:center;justify-content:center; cursor:pointer;
+    background:linear-gradient(145deg, rgba(9,230,118,0.98), rgba(0,220,120,0.9));
+    box-shadow:0 12px 40px rgba(0,220,120,0.12), 0 6px 18px rgba(0,0,0,0.45);
+    border:1px solid rgba(255,255,255,0.06);
+    transform-origin:center;
+    animation: floaty 3.6s ease-in-out infinite;
+  }
+  .fab svg{ width:34px;height:34px; transform:translateZ(0); filter:drop-shadow(0 6px 18px rgba(0,0,0,0.45)); }
+  @keyframes floaty { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px) rotate(-2deg); } }
+
+  /* ========== Utilities & Footer ========== */
+  .muted{ color:var(--muted); font-size:13px; }
+  footer{ margin:48px 0 80px; color:var(--muted); font-size:13px; text-align:center; }
+
+  /* small screens */
+  @media (max-width:520px){
+    .pack{ padding:14px; }
+    .hero{ padding:12px; }
+    .timeline{ padding:10px; flex-direction:column; gap:18px; }
+    .timeline .bar{ display:none; }
+  }
+
+</style>
+</head>
+
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <main class="wrap" id="main">
+    <header class="hero" role="banner" aria-label="Global Communication header">
+      <div class="brand" aria-hidden="false">
+        <div class="logo" aria-hidden="true">
+          <!-- simple monogram -->
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stop-color="#8a00ff" />
+                <stop offset="1" stop-color="#ff005c" />
+              </linearGradient>
+            </defs>
+            <rect x="8" y="8" width="48" height="48" rx="10" fill="url(#g1)" opacity="0.12"/>
+            <path d="M18 40 L28 24 L36 44 L46 20" stroke="url(#g1)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1><span class="glitch" data-text="Global Communication">Global Communication</span></h1>
+          <div class="muted" style="margin-top:4px;">Finance décentralisée — Gains instantanés</div>
+        </div>
+      </div>
+
+      <!-- small header CTA -->
+      <div style="display:flex;gap:10px;align-items:center;">
+        <a class="cta" href="https://wa.me/22897926899" target="_blank" rel="noopener noreferrer" id="ctaTop" aria-label="Activer mon pack unique 20 000 F CFA">
+          Activer mon Pack unique (20 000 F CFA)
+          <span class="pulse" aria-hidden="true"></span>
+        </a>
+      </div>
+    </header>
+
+    <!-- HERO BODY -->
+    <section class="hero-body" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <h2 id="hero-title" class="scramble" aria-live="polite"></h2>
+        <p class="lead">Découvrez la méthode exclusive : accomplissez 10 tâches vidéo quotidiennes et gagnez 2 500 F CFA par tâche — soit 25 000 F CFA par jour. Retraits instantanés dès la fin de chaque tâche. Le pack unique à 20 000 F CFA inclut accès, assistance et paiements automatisés.</p>
+
+        <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
+          <a class="cta" href="https://wa.me/22897926899" target="_blank" rel="noopener noreferrer" id="ctaHero" aria-label="Activer mon Pack unique via WhatsApp">
+            Activer mon Pack unique (20 000 F CFA)
+            <span class="pulse" aria-hidden="true"></span>
+          </a>
+
+          <a class="cta-small" href="https://wa.me/22897926899" target="_blank" rel="noopener noreferrer" aria-label="Contact Service Client WhatsApp">
+            Service Client • WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Pack card with tilt -->
+      <div class="pack-wrap" aria-hidden="false">
+        <div class="pack" id="packCard" role="region" aria-label="Pack unique 20 000 F CFA">
+          <div class="shine" aria-hidden="true"></div>
+          <div class="orb" aria-hidden="true"></div>
+
+          <h2>Pack Unique</h2>
+
+          <div class="price">
+            <div>
+              <div class="counter" id="priceCounter">0</div>
+              <div class="sub">Prix d'activation</div>
+            </div>
+            <div style="margin-left:auto;text-align:right;">
+              <div style="color:var(--muted);font-size:12px;">Gain journalier</div>
+              <div class="counter" id="gainCounter">0</div>
+              <div class="sub" style="text-align:right">Basé sur 10 tâches × 2 500 F</div>
+            </div>
+          </div>
+
+          <div class="benefits">
+            <ul style="margin:12px 0 0 14px;padding:0 0 0 8px;">
+              <li>Accès complet au pack unique</li>
+              <li>Chaîne WhatsApp des tâches & support</li>
+              <li>Retraits instantanés après chaque tâche</li>
+            </ul>
+            <div style="margin-top:12px;">
+              <a class="cta-small" href="https://wa.me/22897926899" target="_blank" rel="noopener noreferrer">Activer maintenant</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section aria-label="Comment ça marche">
+      <h3 style="margin:18px 0 8px 0;">Comment ça marche — 3 étapes simples</h3>
+      <div class="timeline" id="timeline">
+        <div class="bar" aria-hidden="true">
+          <div class="line" id="timelineLine" aria-hidden="true"></div>
+        </div>
+
+        <div class="events">
+          <div class="step" data-step="1">
+            <div class="dot" aria-hidden="true"></div>
+            <div>
+              <h3>Step 1 — Service Client</h3>
+              <p>Contactez notre Service Client officiel via WhatsApp (+228 97 92 68 99) pour activation et vérification.</p>
+            </div>
+          </div>
+
+          <div class="step" data-step="2">
+            <div class="dot" aria-hidden="true"></div>
+            <div>
+              <h3>Step 2 — Chaîne WhatsApp des Tâches</h3>
+              <p>Rejoignez la chaîne WhatsApp pour recevoir vos 10 tâches vidéo quotidiennes automatiquement.
+                <br/><a href="https://whatsapp.com/channel/0029Vb7XUw98KMqju8UGo741" target="_blank" rel="noopener noreferrer" class="muted">Accéder à la chaîne</a>
+              </p>
+            </div>
+          </div>
+
+          <div class="step" data-step="3">
+            <div class="dot" aria-hidden="true"></div>
+            <div>
+              <h3>Step 3 — Paiements & Retraits</h3>
+              <p>Effectuez chaque tâche, recevez 2 500 F CFA par tâche — retraits instantanés dès la validation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section aria-label="Témoignages">
+      <h3 style="margin-top:28px;">Ils parlent de nous</h3>
+      <div class="testimonials" id="testimonials" aria-live="polite">
+        <div class="carousel" id="carousel">
+          <!-- We'll dynamically position testimonial cards with JS -->
+          <div class="card" data-text="0">
+            <div class="who">Aïssata • Togo</div>
+            <p>Service Client rapide & sérieux — Retraits instantanés, je recommande.</p>
+          </div>
+          <div class="card" data-text="1">
+            <div class="who">Kodjo • Lomé</div>
+            <p>10 tâches par jour, paiements fiables. Pack qui change la vie.</p>
+          </div>
+          <div class="card" data-text="2">
+            <div class="who">Miriam • Kara</div>
+            <p>Support excellent sur WhatsApp et méthode très simple à suivre.</p>
+          </div>
+          <div class="card" data-text="3">
+            <div class="who">Sylvain • Sokodé</div>
+            <p>Des gains rapides et des retraits immédiats — transparent et sûr.</p>
+          </div>
+          <div class="card" data-text="4">
+            <div class="who">Esther • Lomé</div>
+            <p>J'ai activé le pack et reçu mes premiers paiements le même jour.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer role="contentinfo">
+      <div>Pack unique • 20 000 F CFA — 10 tâches vidéo quotidiennes • 2 500 F CFA / tâche</div>
+      <div style="margin-top:6px;" class="muted">Service Client WhatsApp : <a class="muted" href="https://wa.me/22897926899" target="_blank" rel="noopener noreferrer">+228 97 92 68 99</a></div>
+    </footer>
+  </main>
+
+  <!-- Floating WhatsApp CTA -->
+  <a class="fab" href="https://wa.me/22897926899" target="_blank" rel="noopener noreferrer" aria-label="Contact Service Client WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20.5 3.5H3.5A.5.5 0 0 0 3 4v12.5c0 .28.22.5.5.5H7v4l4.1-4H20.5a.5.5 0 0 0 .5-.5V4a.5.5 0 0 0-.5-.5z" fill="rgba(255,255,255,0.06)"/>
+      <path d="M12.2 7.3c-.7 0-1.4.2-2 .6-.3.2-.5.5-.6.8l-.2.6c-.1.3 0 .6.2.8l.6.8c.2.3.4.6.6.8.5.5 1.2.8 1.9.9.6 0 1.2-.1 1.7-.4.4-.2.7-.6.9-1 .2-.4.3-.8.2-1.2-.1-.4-.4-.7-.8-.9-.4-.2-.8-.2-1.2 0-.3.1-.6.3-.9.5-.1.1-.2.2-.4.3-.2.1-.4.1-.5.1-.5-.1-.9-.3-1.3-.6-.2-.2-.4-.4-.5-.6-.2-.4-.3-.9-.2-1.4.1-.7.5-1.2 1.1-1.6.6-.4 1.3-.6 2-.5.5.1 1 .3 1.5.6.1.1.2.2.3.3l.3.3c.2.2.4.3.6.4.4.1.8.1 1.1-.1.3-.2.5-.5.6-.9.1-.5 0-1-.4-1.4-.5-.6-1.2-.9-1.9-.9-1.6 0-3.1 1.1-3.6 2.7-.2.7-.1 1.4.3 2.1.1.1.1.1.1.2" fill="#fff"/>
+    </svg>
+  </a>
+
+<script>
+/*
+  JavaScript: centralisé
+  - Scramble (machine) text on hero
+  - CTA pulse on click
+  - Pack card tilt & mobile orientation
+  - Counters with IntersectionObserver
+  - Timeline progress with IntersectionObserver
+  - Testimonials 3D carousel with gentle rotation + blur/scale
+  - Accessibility friendly minimal DOM updates
+*/
+
+/* -------------------- Helpers -------------------- */
+const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+const fmt = n => n.toLocaleString('fr-FR');
+
+/* -------------------- SCRAMBLE / MACHINE TEXT -------------------- */
+(function(){
+  const el = document.querySelector('.scramble');
+  const final = "Prenez les rênes de votre avenir financier aujourd'hui. Demain, il sera trop tard.";
+  // scramble characters
+  const chars = '!<>-_\\/[]{}—=+*^?#________';
+  let progress = 0;
+  let raf = null;
+  function step(){
+    progress += 0.015; // speed
+    const display = [];
+    for(let i=0;i<final.length;i++){
+      if(i < progress * final.length - 0.5){
+        display.push(final[i]);
+      } else if (Math.random() < 0.28 && final[i] !== ' '){
+        display.push(chars[Math.floor(Math.random() * chars.length)]);
+      } else {
+        display.push(' ');
+      }
+    }
+    el.textContent = display.join('');
+    if(progress < 1){
+      raf = requestAnimationFrame(step);
+    } else {
+      el.textContent = final;
+      cancelAnimationFrame(raf);
+    }
+  }
+  // start with a slight delay for "entrance"
+  setTimeout(()=>requestAnimationFrame(step), 350);
+})();
+
+/* -------------------- CTA pulse effect -------------------- */
+(function(){
+  const ctas = document.querySelectorAll('.cta');
+  ctas.forEach(cta=>{
+    cta.addEventListener('click', (e)=>{
+      const pulse = cta.querySelector('.pulse');
+      if(!pulse) return;
+      pulse.classList.remove('anim');
+      // force reflow
+      void pulse.offsetWidth;
+      pulse.classList.add('anim');
+    });
+  });
+})();
+
+/* -------------------- PACK CARD TILT (mouse + device orientation) -------------------- */
+(function(){
+  const card = document.getElementById('packCard');
+  let bounds = null;
+
+  function onPointer(e){
+    if(!bounds) bounds = card.getBoundingClientRect();
+    const posx = ((e.clientX || (e.touches && e.touches[0].clientX)) - bounds.left) / bounds.width;
+    const posy = ((e.clientY || (e.touches && e.touches[0].clientY)) - bounds.top) / bounds.height;
+    const rotateY = (posx - 0.5) * 18; // left-right
+    const rotateX = (0.5 - posy) * 12; // up-down
+    const translateZ = 24 + (0.5 - Math.abs(0.5 - posx)) * 16;
+    card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateZ(${translateZ}px)`;
+    // dynamic shine/orb position
+    const orb = card.querySelector('.orb');
+    orb.style.right = `${-40 - (posx-0.5)*120}px`;
+    orb.style.top = `${-60 - (posy-0.5)*80}px`;
+  }
+  function reset(){
+    card.style.transform = '';
+    card.querySelector('.orb').style.right = '-50px';
+    card.querySelector('.orb').style.top = '-50px';
+  }
+
+  // mouse
+  card.addEventListener('mousemove', onPointer);
+  card.addEventListener('mouseleave', reset);
+  card.addEventListener('touchmove', (e)=>{ onPointer(e); }, {passive:true});
+  card.addEventListener('touchend', reset);
+
+  // device orientation fallback for mobile tilt
+  if(window.DeviceOrientationEvent){
+    window.addEventListener('deviceorientation', (ev)=>{
+      // gamma: left/right tilt [-90,90], beta: front/back [-180,180]
+      const g = ev.gamma || 0;
+      const b = ev.beta || 0;
+      const rotateY = Math.max(-20, Math.min(20, g));
+      const rotateX = Math.max(-12, Math.min(12, -b/10));
+      card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateZ(28px)`;
+    }, true);
+  }
+})();
+
+/* -------------------- COUNTERS (price & gain) -------------------- */
+(function(){
+  const priceEl = document.getElementById('priceCounter');
+  const gainEl = document.getElementById('gainCounter');
+  const targetPrice = 20000;
+  const targetGain = 25000;
+  let started = false;
+
+  function animateCounter(el, from, to, duration=900){
+    const start = performance.now();
+    function tick(now){
+      const t = Math.min(1, (now - start)/duration);
+      el.textContent = fmt(Math.floor(from + (to - from) * easeOutCubic(t)));
+      if(t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting && !started){
+        started = true;
+        animateCounter(priceEl, 0, targetPrice, 1100);
+        // delay gain slightly
+        setTimeout(()=> animateCounter(gainEl, 0, targetGain, 1300), 250);
+      }
+    });
+  }, {threshold: 0.3});
+  obs.observe(document.getElementById('packCard'));
+})();
+
+/* -------------------- TIMELINE - neon line progress + step activation -------------------- */
+(function(){
+  const timeline = document.getElementById('timeline');
+  const line = document.getElementById('timelineLine');
+  const steps = Array.from(timeline.querySelectorAll('.step'));
+
+  // Activate individual steps when visible
+  const stepObserver = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      const el = entry.target;
+      if(entry.isIntersecting){
+        el.classList.add('active');
+      }
+    });
+  }, {threshold:0.6});
+  steps.forEach(s => stepObserver.observe(s));
+
+  // Animate the vertical line based on scroll position inside the timeline container
+  function updateLine(){
+    const rect = timeline.getBoundingClientRect();
+    const total = rect.height;
+    const viewportY = Math.min(Math.max(0, window.innerHeight - rect.top), window.innerHeight);
+    // progress relative to timeline top and bottom
+    const visibleTop = Math.max(0, 0 - rect.top);
+    const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+    // alternate approach: compute percent from top of timeline to bottom based on window center
+    const center = window.innerHeight * 0.5;
+    const start = rect.top;
+    const percent = Math.min(1, Math.max(0, (center - start) / (rect.height)));
+    const scale = Math.max(0.02, Math.min(1, percent));
+    line.style.transform = `scaleY(${scale})`;
+  }
+  updateLine();
+  window.addEventListener('scroll', throttle(updateLine, 40));
+  window.addEventListener('resize', throttle(updateLine, 120));
+
+  // simple throttle
+  function throttle(fn, wait){
+    let t=0;
+    return function(...a){ const now = Date.now(); if(now - t > wait){ t = now; fn.apply(this,a); } };
+  }
+})();
+
+/* -------------------- TESTIMONIALS 3D CAROUSEL -------------------- */
+(function(){
+  const carousel = document.getElementById('carousel');
+  const cards = Array.from(carousel.querySelectorAll('.card'));
+  const n = cards.length;
+  const radius = 320; // how far cards are from center
+  let angle = 0;
+  let autoRotate = true;
+  let lastTime = performance.now();
+
+  // position cards on a circular ring around Y
+  function positionCards(){
+    for(let i=0;i<n;i++){
+      const theta = (i / n) * Math.PI * 2;
+      const x = Math.sin(theta) * radius;
+      const z = Math.cos(theta) * radius;
+      // place card by rotating ring instead of absolute coords
+      const deg = (theta * 180 / Math.PI);
+      const transform = `rotateY(${deg}deg) translateZ(${radius}px)`;
+      cards[i].style.transform = transform + ' translateX(-50%) translateY(-50%)';
+      // initial filter/opacity handled later
+    }
+  }
+  positionCards();
+
+  // rotate the carousel and update blur/scale
+  function frame(now){
+    const dt = Math.min(32, now - lastTime);
+    lastTime = now;
+    if(autoRotate) angle += dt * 0.01; // speed
+    const rotDeg = angle;
+    carousel.style.transform = `translateZ(-${radius}px) rotateY(${rotDeg}deg)`;
+    updateCardFocus(rotDeg);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // update blur & focus based on current rotation
+  function updateCardFocus(rotDeg){
+    // compute each card's angle relative to front
+    for(let i=0;i<n;i++){
+      const theta = (i / n) * 360;
+      const rel = normalizeAngle(theta + rotDeg);
+      // rel near 0 -> front
+      const diff = Math.min(Math.abs(rel), 360 - Math.abs(rel));
+      const blur = Math.min(8, diff / 18); // blur grows with diff
+      const scale = 1 - Math.min(0.25, diff / 360);
+      const opacity = 1 - Math.min(0.5, diff / 180);
+      cards[i].style.filter = `blur(${blur}px)`;
+      cards[i].style.opacity = opacity;
+      cards[i].style.transform = `rotateY(${theta}deg) translateZ(${radius}px) translateX(-50%) translateY(-50%) scale(${scale})`;
+      cards[i].classList.toggle('focus', diff < 18);
+      cards[i].classList.toggle('behind', diff > 40);
+    }
+  }
+  function normalizeAngle(a){
+    let r = ((a % 360) + 360) % 360;
+    // shift so 0 is front (0..360 -> -180..180)
+    if(r > 180) r -= 360;
+    return r;
+  }
+
+  // pause on hover for desktops
+  carousel.addEventListener('mouseenter', ()=> autoRotate = false);
+  carousel.addEventListener('mouseleave', ()=> autoRotate = true);
+
+  // touch drag to rotate
+  let dragging = false;
+  let startX = 0; let startAngle = 0;
+  carousel.addEventListener('pointerdown', (e)=>{
+    dragging = true;
+    startX = e.clientX;
+    startAngle = angle;
+    carousel.setPointerCapture(e.pointerId);
+    autoRotate = false;
+  });
+  carousel.addEventListener('pointermove', (e)=>{
+    if(!dragging) return;
+    const dx = e.clientX - startX;
+    angle = startAngle + dx * 0.008;
+  });
+  carousel.addEventListener('pointerup', (e)=>{
+    dragging = false;
+    autoRotate = true;
+    try{ carousel.releasePointerCapture(e.pointerId); } catch(e){}
+  });
+})();
+
+/* -------------------- Floating FAB pulse & a11y small vibration -------------------- */
+(function(){
+  const fab = document.querySelector('.fab');
+  fab.addEventListener('click', async ()=>{
+    // small visual vibration
+    fab.animate([
+      { transform: 'translateY(0) rotate(0)' },
+      { transform: 'translateY(-6px) rotate(-6deg)' },
+      { transform: 'translateY(0) rotate(3deg)' },
+      { transform: 'translateY(-2px) rotate(-2deg)' },
+      { transform: 'translateY(0) rotate(0)' }
+    ], { duration: 450, easing: 'cubic-bezier(.2,.8,.2,1)' });
+    // try vibration API if available
+    try{ if(navigator.vibrate) navigator.vibrate(40); } catch(e){}
+  });
+})();
+
+/* -------------------- Performance-safe helpers -------------------- */
+/* Debounce utility (if needed) */
+function debounce(fn, wait=150){
+  let t;
+  return (...a)=>{ clearTimeout(t); t = setTimeout(()=>fn.apply(this,a), wait); };
+}
+
+/* End of script */
+</script>
+</body>
+</html>
